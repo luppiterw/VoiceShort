@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        ///just test
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         Button button = (Button) findViewById(R.id.btn);
