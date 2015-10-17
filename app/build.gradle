@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        voiceshort {
+            keyAlias 'Vivisystem'
+            keyPassword 'wanghui2015'
+            storeFile file('voiceshort.jks')
+            storePassword 'wanghui2015'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
     defaultConfig {
         applicationId "com.example.hughie.voiceshort"
         minSdkVersion 15
@@ -15,6 +22,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.voiceshort
+        }
+        debug{
+            signingConfig signingConfigs.voiceshort
         }
     }
 }
