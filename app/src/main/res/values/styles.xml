@@ -1,7 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+    <!--Hughie@20151018
+    Use Theme.AppCompat.Light.NoActionBar to replace Theme.AppCompat.Light.DarkActionBar, so that
+    we can use self-define ToolBar to replace system ActionBar-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
     <!--<style name="AppTheme" parent="android:Theme.Holo.NoActionBar.Fullscreen">-->
     <!--<style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">-->
         <!-- Customize your theme here. -->
