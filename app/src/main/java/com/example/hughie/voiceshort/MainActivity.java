@@ -16,15 +16,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toolbar;
-
+//import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 import java.io.Console;
 
 public class MainActivity extends AppCompatActivity {
 //public class MainActivity extends Activity {
 
     private DrawerLayout mDrawerLayout = null;
-
+    private Toolbar mToolBar = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+
+        mToolBar = (Toolbar)findViewById(R.id.toolbar);
+        mToolBar.setTitle("Voice-Short");
+        setSupportActionBar(mToolBar);
+        //        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        //        setSupportActionBar(toolbar);
 
         Button button = (Button) findViewById(R.id.btn);
         button.setOnClickListener(new View.OnClickListener() {
