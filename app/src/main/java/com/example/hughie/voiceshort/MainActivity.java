@@ -1,37 +1,26 @@
 package com.example.hughie.voiceshort;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.os.Message;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ListView;
 //import android.widget.Toolbar;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
-import java.io.Console;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 //public class MainActivity extends Activity {
+
+
 
     private DrawerLayout mDrawerLayout = null;
     private Toolbar mToolBar = null;
@@ -42,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private MainTimerHandler mMainTimerHandler = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Hughie","MainActivity onCreate");
         super.onCreate(savedInstanceState);
 
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -82,12 +72,11 @@ public class MainActivity extends AppCompatActivity {
         mActionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
                 mDrawerLayout,
+//                mToolBar,
                 R.string.actionbar_drawertoggle_open,
                 R.string.actionbar_drawertoggle_close
         );
         mActionBarDrawerToggle.syncState();
-
-
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
 
 
@@ -179,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-//    @Override
-    protected void onTitleChange(CharSequence title, int color)
+    @Override
+    protected void onTitleChanged(CharSequence title, int color)
     {
         ;
         super.onTitleChanged(title, color);
@@ -194,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         Log.d("Hughie", "onCreateOptionsMenu ");
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         return true;
     }
 
