@@ -94,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume()
     {
         Log.d("MassHug", "MainActivity onResume calling.");
+        if(mTimerTask == null)
+        {
+            mTimerTask = new MainTimerTask(mMainTimerHandler);
+
+        }
         if(mTimer == null)
         {
             mTimer = new Timer();
@@ -116,6 +121,23 @@ public class MainActivity extends AppCompatActivity {
             mTimer.cancel();
             mTimer = null;
         }
+        if(mTimerTask != null)
+        {
+            mTimerTask.cancel();
+            mTimerTask = null;
+        }
+
         super.onPause();
+    }
+
+//    @Override
+    protected void onTitleChange(CharSequence title, int color)
+    {
+        ;
+        super.onTitleChanged(title,color);
+        if(mToolBar != null)
+        {
+            mToolBar.setTitle(title);
+        }
     }
 }
