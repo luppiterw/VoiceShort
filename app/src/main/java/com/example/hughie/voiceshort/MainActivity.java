@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,6 +23,9 @@ import android.widget.Button;
 import android.widget.ListView;
 //import android.widget.Toolbar;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
 import java.io.Console;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout = null;
     private Toolbar mToolBar = null;
+    private ActionBarDrawerToggle mActionBarDrawerToggle = null;
 
     private Timer mTimer = null;
     private MainTimerTask mTimerTask = null;
@@ -54,12 +60,55 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
+
         mToolBar = (Toolbar)findViewById(R.id.toolbar);
-//        mToolBar.setNavigationIcon();
+//        mToolBar.setNavigationIcon(R.drawable.logo);
+        mToolBar.setNavigationIcon(R.mipmap.navigation);
+
         mToolBar.setTitle("Voice-Short");
+
         setSupportActionBar(mToolBar);
-        //        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        //        setSupportActionBar(toolbar);
+
+
+//        final android.support.v7.app.ActionBar ab = getSupportActionBar();
+//        ab.setHomeAsUpIndicator(R.drawable.logo);
+//        ab.setDisplayHomeAsUpEnabled(true);
+//        mToolBar.setNavigationIcon(R.drawable.logo);
+//        mToolBar.setNavigationIcon(R.string.actionbar_drawertoggle_open);
+
+        // ActionBarDrawerToggle ties together the the proper interactions
+        // between the sliding drawer and the action bar app icon
+        ///< 动画切换效果
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                R.string.actionbar_drawertoggle_open,
+                R.string.actionbar_drawertoggle_close
+        );
+        mActionBarDrawerToggle.syncState();
+
+
+        mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
+
+
+//        mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener(){
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item){
+//                switch (item.getItemId()) {
+//                    case R.id.action_settings:
+//                        Toast.makeText(MainActivity.this, "action_settings", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case R.id.action_share:
+//                        Toast.makeText(MainActivity.this, "action_share", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
+        //        Toolbar toolbar_main = (Toolbar)findViewById(R.id.toolbar_main);
+        //        setSupportActionBar(toolbar_main);
 
 
         Button button = (Button) findViewById(R.id.btn);
@@ -134,10 +183,52 @@ public class MainActivity extends AppCompatActivity {
     protected void onTitleChange(CharSequence title, int color)
     {
         ;
-        super.onTitleChanged(title,color);
+        super.onTitleChanged(title, color);
         if(mToolBar != null)
         {
             mToolBar.setTitle(title);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        Log.d("Hughie", "onCreateOptionsMenu ");
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    private static Integer mOptionsItemSelectedCount = 0;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        Log.d("Hughie", "item.getItemId = " + item.getItemId());
+//        Log.d("Hughie", "item.toString() = " + item.toString());
+//        Log.d("Hughie", "android.R.id.home = " + android.R.id.home);
+//        if(mToolBar != null)
+//            Log.d("Hughie", "Menu=" + mToolBar.getMenu().toString());
+//        Log.d("Hughie", "onOptionsItemSelected--- " + item.getMenuInfo().toString());
+        Log.d("Hughie", "");
+
+        switch (item.getItemId())
+        {
+            case R.id.action_settings:
+                Log.d("Hughie", "onOptionsItemSelected---action_settings " + ++mOptionsItemSelectedCount);
+                Toast.makeText(MainActivity.this, "action_settings", Toast.LENGTH_SHORT).show();
+                return true;
+            case android.R.id.home:
+                if(mDrawerLayout != null)
+                {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                    return true;
+                }
+
+//            case R.id.action_share:
+//                Log.d("Hughie","onOptionsItemSelected---action_share");
+//                Toast.makeText(MainActivity.this, "action_share", Toast.LENGTH_SHORT).show();
+//                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
