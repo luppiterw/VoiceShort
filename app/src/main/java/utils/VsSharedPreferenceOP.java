@@ -1,4 +1,4 @@
-package utils.old;
+package utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,7 +10,7 @@ import utils.VsException;
 /**
  * Created by hughie on 15/10/23.
  */
-public class OldVsSharedPreference
+public class VsSharedPreferenceOP
 {
     private static final String UI_FILENAME = "ui_store";
 
