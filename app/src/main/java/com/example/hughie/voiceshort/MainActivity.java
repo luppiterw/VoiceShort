@@ -31,8 +31,14 @@ public class MainActivity extends AppCompatActivity {
     private MainTimerHandler mMainTimerHandler = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Hughie","MainActivity onCreate");
+        Log.d("Hughie", "MainActivity onCreate");
         super.onCreate(savedInstanceState);
+
+        VsTestData data1 = new VsTestData("data1", 1);
+        VsSharedPreference vsp = new VsSharedPreference();
+        vsp.doSave(data1, this);
+
+        vsp.doRead(this);
 
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         LayoutInflater inflater = LayoutInflater.from(this);
