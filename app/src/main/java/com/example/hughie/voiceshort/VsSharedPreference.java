@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.IllegalFormatException;
 import java.util.Map;
 import java.util.Set;
@@ -29,71 +30,7 @@ public class VsSharedPreference
     public static final Map<Class<?>,Integer> VS_TYPES;
     static
     {
-        VS_TYPES = new Map<Class<?>, Integer>() {
-            @Override
-            public void clear() {
-
-            }
-
-            @Override
-            public boolean containsKey(Object key) {
-                return false;
-            }
-
-            @Override
-            public boolean containsValue(Object value) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            public Set<Entry<Class<?>, Integer>> entrySet() {
-                return null;
-            }
-
-            @Override
-            public Integer get(Object key) {
-                return null;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            public Set<Class<?>> keySet() {
-                return null;
-            }
-
-            @Override
-            public Integer put(Class<?> key, Integer value) {
-                return null;
-            }
-
-            @Override
-            public void putAll(Map<? extends Class<?>, ? extends Integer> map) {
-
-            }
-
-            @Override
-            public Integer remove(Object key) {
-                return null;
-            }
-
-            @Override
-            public int size() {
-                return 0;
-            }
-
-            @NonNull
-            @Override
-            public Collection<Integer> values() {
-                return null;
-            }
-        };
-
+        VS_TYPES = new HashMap<Class<?>,Integer>();
         VS_TYPES.put(byte.class,VS_BYTE);
         VS_TYPES.put(short.class,VS_SHORT);
         VS_TYPES.put(int.class,VS_INTEGER);
@@ -117,6 +54,7 @@ public class VsSharedPreference
             return;
         }
         SharedPreferences sp = context.getSharedPreferences(object.getClass().getName(), Context.MODE_PRIVATE);
+        Log.d("Hughie", "doSave xml=" + object.getClass().getName());
         SharedPreferences.Editor editor = sp.edit();
         Class<? extends VsShpInterface> clazz = object.getClass();
         Field[] arrayField = clazz.getDeclaredFields();
@@ -124,8 +62,9 @@ public class VsSharedPreference
         {
             for(Field f : arrayField)
             {
-                Log.d("Hughie","type[" + f.getType() + "] name[" + f.getName() + "]");
+//                Log.d("Hughie","type[" + f.getType() + "] name[" + f.getName() + "]");
                 int type = VS_TYPES.get(f.getType());
+//                Log.d("Hughie","type[" + f.getType() + "] name[" + f.getName() + "] 00");
                 switch (type)
                 {
                     case VS_BYTE:
@@ -137,6 +76,8 @@ public class VsSharedPreference
                         editor.putLong(f.getName(), f.getLong(object));
                         break;
                     case VS_STRING:
+                        Log.d("Hughie","type[" + f.getType() + "] name[" + f.getName() + "] " +
+                                " value="+f.get(object));
                         editor.putString(f.getName(), (String)f.get(object));
                         break;
                     case VS_BOOLEAN:
@@ -165,19 +106,20 @@ public class VsSharedPreference
     /**
      * @param context Input Context for getSharedPreferences
      * */
-    public VsShpInterface doRead(Context context)
+    public void doRead(VsShpInterface object, Context context)
     {
-        SharedPreferences sp = context.getSharedPreferences(VsSharedPreference.class.getName(), Context.MODE_PRIVATE);
-        VsShpInterface object = new VsShpInterface() {
-        };
+        SharedPreferences sp = context.getSharedPreferences(object.getClass().getName(), Context.MODE_PRIVATE);
+        Log.d("Hughie", "doRead xml=" + object.getClass().getName());
+//        VsShpInterface object = new VsShpInterface();
         Class<? extends  VsShpInterface> clazz = object.getClass();
-
+        Log.d("Hughie","doRead clazz.class=" + clazz.getName());
         Field[] arryFiled = clazz.getDeclaredFields();
         try
         {
             for (Field f : arryFiled)
             {
                 int type = VS_TYPES.get(f.getType());
+                Log.d("Hughie","doRead Field.type=" + type);
                 switch (type) {
                     case VS_BYTE:
                         byte byteValue = (byte) sp.getInt(f.getName(), 0);
@@ -189,6 +131,7 @@ public class VsSharedPreference
                         break;
                     case VS_INTEGER:
                         int intValue = sp.getInt(f.getName(), 0);
+                        Log.d("Hughie","doRead Field.int=" + intValue);
                         f.set(object, intValue);
                         break;
                     case VS_LONG:
@@ -197,6 +140,7 @@ public class VsSharedPreference
                         break;
                     case VS_STRING:
                         String str = sp.getString(f.getName(), null);
+                        Log.d("Hughie","doRead Field.String=" + str);
                         f.set(object, str);
                         break;
                     case VS_BOOLEAN:
@@ -222,7 +166,7 @@ public class VsSharedPreference
         {
             e.printStackTrace();
         }
-        return object;
+//        return object;
     }
 
 }

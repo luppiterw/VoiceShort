@@ -37,9 +37,10 @@ public class MainActivity extends AppCompatActivity {
         VsTestData data1 = new VsTestData("data1", 1);
         VsSharedPreference vsp = new VsSharedPreference();
         vsp.doSave(data1, this);
-
-        vsp.doRead(this);
-
+//        Log.d("Hughie", "MainActivity onCreate doSave done!.");
+        vsp.doRead(data1, this);
+//        Log.d("Hughie", "MainActivity onCreate doRead done!.");
+        data1.printData();
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.activity_main, null);
