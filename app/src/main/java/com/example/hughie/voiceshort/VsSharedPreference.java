@@ -2,14 +2,10 @@ package com.example.hughie.voiceshort;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.IllegalFormatException;
 import java.util.Map;
-import java.util.Set;
 import java.lang.reflect.Field;
 
 /**
@@ -45,7 +41,7 @@ public class VsSharedPreference
      * @param object Object need to be handled
      * @param context Input Context for getSharedPreferences
      * */
-    public void doSave(VsShpInterface object, Context context)
+    public void doSave(VsShpDataBase object, Context context)
     {
         if(object == null ||
                 context == null)
@@ -56,7 +52,7 @@ public class VsSharedPreference
         SharedPreferences sp = context.getSharedPreferences(object.getClass().getName(), Context.MODE_PRIVATE);
         Log.d("Hughie", "doSave xml=" + object.getClass().getName());
         SharedPreferences.Editor editor = sp.edit();
-        Class<? extends VsShpInterface> clazz = object.getClass();
+        Class<? extends VsShpDataBase> clazz = object.getClass();
         Field[] arrayField = clazz.getDeclaredFields();
         try
         {
@@ -106,12 +102,12 @@ public class VsSharedPreference
     /**
      * @param context Input Context for getSharedPreferences
      * */
-    public void doRead(VsShpInterface object, Context context)
+    public void doRead(VsShpDataBase object, Context context)
     {
         SharedPreferences sp = context.getSharedPreferences(object.getClass().getName(), Context.MODE_PRIVATE);
         Log.d("Hughie", "doRead xml=" + object.getClass().getName());
-//        VsShpInterface object = new VsShpInterface();
-        Class<? extends  VsShpInterface> clazz = object.getClass();
+//        VsShpDataBase object = new VsShpDataBase();
+        Class<? extends VsShpDataBase> clazz = object.getClass();
         Log.d("Hughie","doRead clazz.class=" + clazz.getName());
         Field[] arryFiled = clazz.getDeclaredFields();
         try

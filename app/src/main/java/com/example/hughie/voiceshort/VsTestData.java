@@ -5,7 +5,7 @@ import android.util.Log;
 /**
  * Created by hughie on 15/10/23.
  */
-public class VsTestData extends VsShpInterface
+public class VsTestData extends VsShpDataBase
 {
     public String name;
     public int num;
