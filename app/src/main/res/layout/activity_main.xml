@@ -44,6 +44,8 @@
 
             <!--</android.support.v7.widget.Toolbar>-->
 
+
+
             <Button
                 android:id="@+id/btn"
                 android:layout_width="match_parent"
@@ -59,21 +61,21 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:text="New Text"
                 android:id="@+id/textView"
                 android:layout_gravity="center_horizontal"
                 android:textSize="24sp"
                 />
 
+
             <utils.richeditor.RichEditor
                 android:id="@+id/editor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="top|left"
+                android:gravity="left|top"
+
                 >
-
-
             </utils.richeditor.RichEditor>
 
 

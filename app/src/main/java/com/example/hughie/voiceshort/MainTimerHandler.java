@@ -33,7 +33,7 @@ public class MainTimerHandler extends Handler
         {
             case MainTimerTask.UPDATETIME:
             {
-                Log.d("MassHug","MainTimerHandler-handleMessage-UPDATETIME...");
+//                Log.d("MassHug","MainTimerHandler-handleMessage-UPDATETIME...");
 //                System.out.println("MainTimerHandler-handleMessage-UPDATETIME...");
                 if (mView != null)
                 {

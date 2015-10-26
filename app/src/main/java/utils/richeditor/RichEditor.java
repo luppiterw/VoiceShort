@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -43,30 +44,54 @@ public class RichEditor extends WebView {
         H6
     }
 
+    /**
+     * 供外部调用的接口类
+     * 编辑器文字改变时，调用onTextChange方法，
+     * 可在外部实现onTextChange方法，达到外部的目的
+     *
+     * */
     public interface OnTextChangeListener {
 
         void onTextChange(String text);
     }
-
+    /**
+     * 供外部调用的接口类
+     * 内部预留，未使用，可删除
+     * 可在外部实现onStateChangeListener方法，达到外部的目的
+     *
+     * */
     public interface OnDecorationStateListener {
 
         void onStateChangeListener(String text, List<Type> types);
     }
 
+    /**
+     * 供外部调用的接口类
+     * 加载完成时，调用onAfterInitialLoad方法，
+     * 可在外部实现onAfterInitialLoad方法，达到外部的目的
+     *
+     * */
     public interface AfterInitialLoadListener {
 
         void onAfterInitialLoad(boolean isReady);
     }
 
+    ///< url 地址（此处使用本地地址）对应于assets/editor.html部署
     private static final String SETUP_HTML = "file:///android_asset/editor.html";
+    ///< assets 中rich_editor.js监控 todo 了解js相关事件回调及处理
     private static final String CALLBACK_SCHEME = "re-callback://";
+    ///< assets 中rich_editor.js监控 todo 了解js相关事件回调及处理
     private static final String STATE_SCHEME = "re-state://";
+    ///< js editor加载完成的标识，未加载完成时，对editor的一系列操作无法进行，处于等待状态
     private boolean isReady = false;
     private String mContents;
     private OnTextChangeListener mTextChangeListener;
     private OnDecorationStateListener mDecorationStateListener;
     private AfterInitialLoadListener mLoadListener;
 
+    /**
+     * 创建一个单线程的线程池用于处理editor的exec任务，即当editor未加载成功时，将对editor的操作保存至该线程池中
+     * */
     private static ExecutorService sThreadPool = Executors.newSingleThreadExecutor();
 
     public RichEditor(Context context) {
@@ -84,17 +109,29 @@ public class RichEditor extends WebView {
         setVerticalScrollBarEnabled(false);
         setHorizontalScrollBarEnabled(false);
         getSettings().setJavaScriptEnabled(true);
+        /**
+         * 需要监视加载进度的时候，可创建自己的WebChromeClient类，并重载onProgressChanged方法，
+         * 再webview.setWebChromeClient(new MyWebChromeClient())即可。
+         */
         setWebChromeClient(new WebChromeClient());
         setWebViewClient(new WebViewClient() {
-            @Override public void onPageFinished(WebView view, String url) {
+
+            /**
+             * 加载完成时调用
+             * */
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.d("Hughie","onPageFinished url="+url);
                 isReady = url.equalsIgnoreCase(SETUP_HTML);
                 if (mLoadListener != null) {
                     mLoadListener.onAfterInitialLoad(isReady);
                 }
             }
 
-            @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 String decode;
+                Log.d("Hughie","shouldOverrideUrlLoading url="+url);
                 try {
                     decode = URLDecoder.decode(url, "UTF-8");
                 } catch (UnsupportedEncodingException e) {
@@ -119,25 +156,31 @@ public class RichEditor extends WebView {
     }
 
     public void setOnTextChangeListener(OnTextChangeListener listener) {
+        Log.d("Hughie","setOnTextChangeListener");
         mTextChangeListener = listener;
     }
 
     public void setOnDecorationChangeListener(OnDecorationStateListener listener) {
+        Log.d("Hughie","setOnDecorationChangeListener");
         mDecorationStateListener = listener;
     }
 
     public void setOnInitialLoadListener(AfterInitialLoadListener listener) {
+        Log.d("Hughie","setOnInitialLoadListener");
         mLoadListener = listener;
     }
 
     private void callback(String text) {
+        Log.d("Hughie","callback text=" + text);
         mContents = text.replaceFirst(CALLBACK_SCHEME, "");
         if (mTextChangeListener != null) {
+            Log.d("Hughie","callback mTextChangeListener=" + mTextChangeListener);
             mTextChangeListener.onTextChange(mContents);
         }
     }
 
     private void stateCheck(String text) {
+        Log.d("Hughie","stateCheck text=" + text);
         String state = text.replaceFirst(STATE_SCHEME, "").toUpperCase(Locale.ENGLISH);
         List<Type> types = new ArrayList<>();
         for (Type type : Type.values()) {
@@ -158,26 +201,34 @@ public class RichEditor extends WebView {
         TypedArray ta = context.obtainStyledAttributes(attrs, attrsArray);
 
         int gravity = ta.getInt(0, NO_ID);
+        Log.d("Hughie","applyAttributes gravity=" + gravity);
         switch (gravity) {
             case Gravity.LEFT:
+                Log.d("Hughie","applyAttributes Gravity.LEFT=" + Gravity.LEFT);
                 exec("javascript:RE.setTextAlign(\"left\")");
                 break;
             case Gravity.RIGHT:
+                Log.d("Hughie","applyAttributes Gravity.RIGHT=" + Gravity.RIGHT);
                 exec("javascript:RE.setTextAlign(\"right\")");
                 break;
             case Gravity.TOP:
+                Log.d("Hughie","applyAttributes Gravity.TOP=" + Gravity.TOP);
                 exec("javascript:RE.setVerticalAlign(\"top\")");
                 break;
             case Gravity.BOTTOM:
+                Log.d("Hughie","applyAttributes Gravity.BOTTOM=" + Gravity.BOTTOM);
                 exec("javascript:RE.setVerticalAlign(\"bottom\")");
                 break;
             case Gravity.CENTER_VERTICAL:
+                Log.d("Hughie","applyAttributes Gravity.CENTER_VERTICAL=" + Gravity.CENTER_VERTICAL);
                 exec("javascript:RE.setVerticalAlign(\"middle\")");
                 break;
             case Gravity.CENTER_HORIZONTAL:
+                Log.d("Hughie","applyAttributes Gravity.CENTER_HORIZONTAL=" + Gravity.CENTER_HORIZONTAL);
                 exec("javascript:RE.setTextAlign(\"center\")");
                 break;
             case Gravity.CENTER:
+                Log.d("Hughie","applyAttributes Gravity.CENTER=" + Gravity.CENTER);
                 exec("javascript:RE.setVerticalAlign(\"middle\")");
                 exec("javascript:RE.setTextAlign(\"center\")");
                 break;
@@ -187,6 +238,7 @@ public class RichEditor extends WebView {
     }
 
     public void setHtml(String contents) {
+        Log.d("Hughie","setHtml contents=" + contents);
         if (contents == null) {
             contents = "";
         }
@@ -392,6 +444,10 @@ public class RichEditor extends WebView {
         }
     }
 
+    /**
+     * 等待editor加载的任务
+     * todo 具体实现可扩展
+     * */
     private class WaitLoad extends AsyncTask<Void, Void, Void> {
 
         private String mTrigger;
