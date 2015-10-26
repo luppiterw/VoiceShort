@@ -2,6 +2,8 @@ package com.example.hughie.voiceshort;
 
 import android.util.Log;
 
+import utils.VsShpDataBase;
+
 /**
  * Created by hughie on 15/10/23.
  */

@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.lang.reflect.Field;
 
+import utils.VsShpDataBase;
+
 /**
  * Created by wanghui on 2015/10/22.
  * 处理SharedPreference数据的通用类，项目中所有
