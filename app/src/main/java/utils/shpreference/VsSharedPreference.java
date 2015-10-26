@@ -1,4 +1,4 @@
-package com.example.hughie.voiceshort;
+package utils.shpreference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.lang.reflect.Field;
 
-import utils.VsShpDataBase;
+import utils.shpreference.VsShpDataBase;
 
 /**
  * Created by wanghui on 2015/10/22.

@@ -1,4 +1,4 @@
-package utils;
+package utils.shpreference;
 
 import android.content.Context;
 import android.content.SharedPreferences;

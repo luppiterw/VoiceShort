@@ -1,4 +1,4 @@
-package utils;
+package utils.shpreference;
 
 /**
  * Created by hughie on 15/10/23.

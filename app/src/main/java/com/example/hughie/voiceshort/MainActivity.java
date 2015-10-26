@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import java.util.Timer;
 
+import utils.shpreference.VsSharedPreference;
+
 public class MainActivity extends AppCompatActivity {
 //public class MainActivity extends Activity {
 
