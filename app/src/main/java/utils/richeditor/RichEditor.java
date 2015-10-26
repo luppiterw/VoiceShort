@@ -201,6 +201,14 @@ public class RichEditor extends WebView {
         TypedArray ta = context.obtainStyledAttributes(attrs, attrsArray);
 
         int gravity = ta.getInt(0, NO_ID);
+        /**
+         * js中的editor应该是默认居中的，
+         * 此处没有处理组合的情况，比如在xml中设置了android:gravity="left|top"，则在此处找不到对应，
+         * 奇怪的是，这里找不到对应，但是在显示的时候还是会生效
+         * 我的猜测是，因为继承了WebView控件，其应该在内部有一些基础的属性设置，所以直接在xml中配置会生效
+         * 这里的自定义方式，则会覆盖内部设置。
+         * todo 这里需要添加完整组合的处理，防止带来一些意外结果
+         * */
         Log.d("Hughie","applyAttributes gravity=" + gravity);
         switch (gravity) {
             case Gravity.LEFT:
