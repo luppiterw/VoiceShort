@@ -157,7 +157,9 @@ public class MainActivity extends AppCompatActivity {
         mEditor.setHorizontalScrollBarEnabled(true);
 //        mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
         mEditor.setPlaceholder("Insert text here...");
-
+        mEditor.setBackgroundColor(Color.TRANSPARENT);
+//        mEditor.set
+//        mEditor.getBackground().setAlpha(0);
     }
 
     @Override
