@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:weightSum="1">
+            android:weightSum="12">
 
             <include layout="@layout/toolbar_main" />
             <!--<include layout="@layout/toolbar_main"-->
@@ -48,6 +48,7 @@
                 android:id="@+id/btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:text="open"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
@@ -56,13 +57,24 @@
                 android:layout_gravity="left|top" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="New Text"
                 android:id="@+id/textView"
                 android:layout_gravity="center_horizontal"
                 android:textSize="24sp"
                 />
+
+            <utils.richeditor.RichEditor
+                android:id="@+id/editor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|left"
+                >
+
+
+            </utils.richeditor.RichEditor>
 
 
         </LinearLayout>

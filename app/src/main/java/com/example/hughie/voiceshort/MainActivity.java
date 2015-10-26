@@ -1,5 +1,6 @@
 package com.example.hughie.voiceshort;
 
+import android.graphics.Color;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,7 +18,7 @@ import android.widget.Toast;
 
 import java.util.Timer;
 
-import utils.shpreference.VsSharedPreference;
+import utils.richeditor.RichEditor;
 
 public class MainActivity extends AppCompatActivity {
 //public class MainActivity extends Activity {
@@ -31,23 +32,31 @@ public class MainActivity extends AppCompatActivity {
     private Timer mTimer = null;
     private MainTimerTask mTimerTask = null;
     private MainTimerHandler mMainTimerHandler = null;
+
+
+    private RichEditor mEditor = null;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         Log.d("Hughie", "MainActivity onCreate");
         super.onCreate(savedInstanceState);
 
-        VsTestData data1 = new VsTestData("data1", 1);
-        VsSharedPreference vsp = new VsSharedPreference();
-        vsp.doSave(data1, this);
-//        Log.d("Hughie", "MainActivity onCreate doSave done!.");
-        vsp.doRead(data1, this);
-//        Log.d("Hughie", "MainActivity onCreate doRead done!.");
-        data1.printData();
+//        VsTestData data1 = new VsTestData("data1", 1);
+//        VsSharedPreference vsp = new VsSharedPreference();
+//        vsp.doSave(data1, this);
+////        Log.d("Hughie", "MainActivity onCreate doSave done!.");
+//        vsp.doRead(data1, this);
+////        Log.d("Hughie", "MainActivity onCreate doRead done!.");
+//        data1.printData();
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Log.d("Hughie", "MainActivity onCreate before LayoutInflater.from");
         LayoutInflater inflater = LayoutInflater.from(this);
+        Log.d("Hughie", "MainActivity onCreate after LayoutInflater.from");
         View view = inflater.inflate(R.layout.activity_main, null);
 
+        Log.d("Hughie", "MainActivity onCreate before setContentView.");
         setContentView(view);
+        Log.d("Hughie", "MainActivity onCreate after setContentView.");
 //        setContentView(R.layout.activity_main);
 
 
@@ -135,6 +144,19 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        Log.d("Hughie", "mEditor 0");
+        mEditor = (RichEditor) findViewById(R.id.editor);
+        Log.d("Hughie","mEditor 1");
+        mEditor.setEditorHeight(200);
+        mEditor.setEditorFontSize(22);
+        mEditor.setEditorFontColor(Color.RED);
+        //mEditor.setEditorBackgroundColor(Color.BLUE);
+        //mEditor.setBackgroundColor(Color.BLUE);
+        //mEditor.setBackgroundResource(R.drawable.bg);
+        mEditor.setPadding(10, 10, 10, 10);
+//        mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
+        mEditor.setPlaceholder("Insert text here...");
+
     }
 
     @Override
