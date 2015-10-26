@@ -106,8 +106,8 @@ public class RichEditor extends WebView {
     public RichEditor(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setVerticalScrollBarEnabled(false);
-        setHorizontalScrollBarEnabled(false);
+        setVerticalScrollBarEnabled(true);
+        setHorizontalScrollBarEnabled(true);
         getSettings().setJavaScriptEnabled(true);
         /**
          * 需要监视加载进度的时候，可创建自己的WebChromeClient类，并重载onProgressChanged方法，

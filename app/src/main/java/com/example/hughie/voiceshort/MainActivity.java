@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         //mEditor.setBackgroundColor(Color.BLUE);
         //mEditor.setBackgroundResource(R.drawable.bg);
         mEditor.setPadding(10, 10, 10, 10);
+        mEditor.setHorizontalScrollBarEnabled(true);
 //        mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
         mEditor.setPlaceholder("Insert text here...");
 
