@@ -284,7 +284,14 @@ RE.removeFormat = function() {
 
 RE.testFun = function(){
     window.TestJS.printTest("111111111111111111");
-    RE.setUnderline();
+    window.TestJS.getText(RE.getText());
+    var properties = "";
+    for(var i in RE.editor)
+    {
+        properties += "s=[" + i + "]\n";
+    }
+    window.TestJS.getSelection(properties);//(RE.editor.length);
+//    RE.setUnderline();
 
 }
 // Event Listeners

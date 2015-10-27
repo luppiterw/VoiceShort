@@ -112,7 +112,7 @@ public class RichEditor extends WebView {
         setHorizontalScrollBarEnabled(true);
         getSettings().setJavaScriptEnabled(true);
         mTestJS = new TestJS();
-        addJavascriptInterface(mTestJS,"TestJS");
+        addJavascriptInterface(this,"TestJS");
 
 
 //        getBackground().setAlpha(2);;
@@ -138,7 +138,7 @@ public class RichEditor extends WebView {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 String decode;
-                Log.d("Hughie","shouldOverrideUrlLoading url="+url);
+//                Log.d("Hughie","shouldOverrideUrlLoading url="+url);
                 try {
                     decode = URLDecoder.decode(url, "UTF-8");
                 } catch (UnsupportedEncodingException e) {
@@ -184,10 +184,10 @@ public class RichEditor extends WebView {
     }
 
     private void callback(String text) {
-        Log.d("Hughie","callback text=" + text);
+//        Log.d("Hughie","callback text=" + text);
         mContents = text.replaceFirst(CALLBACK_SCHEME, "");
         if (mTextChangeListener != null) {
-            Log.d("Hughie","callback mTextChangeListener=" + mTextChangeListener);
+//            Log.d("Hughie","callback mTextChangeListener=" + mTextChangeListener);
             mTextChangeListener.onTextChange(mContents);
         }
     }
@@ -195,7 +195,7 @@ public class RichEditor extends WebView {
     private void stateCheck(String text) {
 
         String state = text.replaceFirst(STATE_SCHEME, "").toUpperCase(Locale.ENGLISH);
-        Log.d("Hughie","stateCheck text=" + text + " state=" + state);
+//        Log.d("Hughie","stateCheck text=" + text + " state=" + state);
         List<Type> types = new ArrayList<>();
         for (Type type : Type.values()) {
 //            Log.d("Hughie","    stateCheck for state=" + state + " type.name=" + type.name());
@@ -506,4 +506,21 @@ public class RichEditor extends WebView {
         Log.d("Hughie","testJSInterface");
     }
 
+    @JavascriptInterface
+    public void printTest(String result)
+    {
+        Log.d("Hughie", "[RichEditor] printTest result=" + result);
+    }
+    @JavascriptInterface
+    public String getText(String text)
+    {
+        Log.d("Hughie","getText=["+text+"]");
+        return text;
+    }
+    @JavascriptInterface
+    public String getSelection(String selection)
+    {
+        Log.d("Hughie","getSelection=["+selection+"]");
+        return selection;
+    }
 }
