@@ -114,6 +114,7 @@ public class RichEditor extends WebView {
         mTestJS = new TestJS();
         addJavascriptInterface(this,"TestJS");
 
+        getProgress();
 
 //        getBackground().setAlpha(2);;
         /**
@@ -138,7 +139,7 @@ public class RichEditor extends WebView {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 String decode;
-//                Log.d("Hughie","shouldOverrideUrlLoading url="+url);
+                Log.d("Hughie","shouldOverrideUrlLoading url="+url);
                 try {
                     decode = URLDecoder.decode(url, "UTF-8");
                 } catch (UnsupportedEncodingException e) {
@@ -184,7 +185,7 @@ public class RichEditor extends WebView {
     }
 
     private void callback(String text) {
-//        Log.d("Hughie","callback text=" + text);
+        Log.d("Hughie","callback text=" + text);
         mContents = text.replaceFirst(CALLBACK_SCHEME, "");
         if (mTextChangeListener != null) {
 //            Log.d("Hughie","callback mTextChangeListener=" + mTextChangeListener);
@@ -195,7 +196,7 @@ public class RichEditor extends WebView {
     private void stateCheck(String text) {
 
         String state = text.replaceFirst(STATE_SCHEME, "").toUpperCase(Locale.ENGLISH);
-//        Log.d("Hughie","stateCheck text=" + text + " state=" + state);
+        Log.d("Hughie","stateCheck text=" + text + " state=" + state);
         List<Type> types = new ArrayList<>();
         for (Type type : Type.values()) {
 //            Log.d("Hughie","    stateCheck for state=" + state + " type.name=" + type.name());
