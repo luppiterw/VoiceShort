@@ -22,6 +22,7 @@ RE.currentSelection = {
     "endContainer": 0,
     "endOffset": 0};
 
+
 RE.editor = document.getElementById('editor');
 
 document.addEventListener("selectionchange", function() { RE.backuprange(); });
@@ -281,6 +282,10 @@ RE.removeFormat = function() {
     execCommand('removeFormat', false, null);
 }
 
+RE.testFun = function(){
+    RE.setUnderline();
+    TestJS.printTest("111111111111111111");
+}
 // Event Listeners
 RE.editor.addEventListener("input", RE.callback);
 RE.editor.addEventListener("keyup", function(e) {

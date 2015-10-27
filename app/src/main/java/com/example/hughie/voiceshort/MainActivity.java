@@ -1,6 +1,7 @@
 package com.example.hughie.voiceshort;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -125,7 +126,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 按钮按下，将抽屉打开
 //                mDrawerLayout.openDrawer(Gravity.LEFT|Gravity.TOP);
-                mDrawerLayout.openDrawer(GravityCompat.START);
+//                mDrawerLayout.openDrawer(GravityCompat.START);
+                if(mEditor != null)
+                {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        mEditor.testJSInterface();
+//                        mEditor.findAllAsync("a");
+//                        if(mEditor.pageDown(true) == false)
+//                        {
+//                            Toast.makeText(v.getContext(),"PPaaa",Toast.LENGTH_SHORT).show();
+//                        }
+                    }
+                }
 //                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
 //                builder.setTitle ("Hello Dialog")
 //                        .setMessage ("Is this material design?")

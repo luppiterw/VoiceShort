@@ -89,6 +89,7 @@ public class RichEditor extends WebView {
     private OnDecorationStateListener mDecorationStateListener;
     private AfterInitialLoadListener mLoadListener;
 
+    private REditorJavaScriptInterface mREditorJavaScriptInterface;
     /**
      * 创建一个单线程的线程池用于处理editor的exec任务，即当editor未加载成功时，将对editor的操作保存至该线程池中
      * */
@@ -102,13 +103,17 @@ public class RichEditor extends WebView {
         this(context, attrs, android.R.attr.webViewStyle);
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface", "JavascriptInterface"})
     public RichEditor(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         setVerticalScrollBarEnabled(true);
         setHorizontalScrollBarEnabled(true);
         getSettings().setJavaScriptEnabled(true);
+        mREditorJavaScriptInterface = new REditorJavaScriptInterface();
+        addJavascriptInterface(mREditorJavaScriptInterface,"TestJS");
+
+
 //        getBackground().setAlpha(2);;
         /**
          * 需要监视加载进度的时候，可创建自己的WebChromeClient类，并重载onProgressChanged方法，
@@ -171,6 +176,12 @@ public class RichEditor extends WebView {
         mLoadListener = listener;
     }
 
+    public int getCursorLine()
+    {
+        int ret = -1;
+        return ret;
+    }
+
     private void callback(String text) {
         Log.d("Hughie","callback text=" + text);
         mContents = text.replaceFirst(CALLBACK_SCHEME, "");
@@ -181,10 +192,12 @@ public class RichEditor extends WebView {
     }
 
     private void stateCheck(String text) {
-        Log.d("Hughie","stateCheck text=" + text);
+
         String state = text.replaceFirst(STATE_SCHEME, "").toUpperCase(Locale.ENGLISH);
+        Log.d("Hughie","stateCheck text=" + text + " state=" + state);
         List<Type> types = new ArrayList<>();
         for (Type type : Type.values()) {
+//            Log.d("Hughie","    stateCheck for state=" + state + " type.name=" + type.name());
             if (TextUtils.indexOf(state, type.name()) != -1) {
                 types.add(type);
             }
@@ -482,6 +495,24 @@ public class RichEditor extends WebView {
                 wait(ms);
             } catch (InterruptedException ignore) {
             }
+        }
+    }
+
+
+    public void testJSInterface() {
+        exec("javascript:RE.testFun();");
+        Log.d("Hughie","testJSInterface");
+    }
+
+    final class REditorJavaScriptInterface
+    {
+        REditorJavaScriptInterface()
+        {
+
+        }
+        public void printTest(String result)
+        {
+            Log.d("Hughie", "[REditorJavaScriptInterface] getTest result=" + result);
         }
     }
 }
