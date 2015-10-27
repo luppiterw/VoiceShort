@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.JavascriptInterface;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -89,7 +90,7 @@ public class RichEditor extends WebView {
     private OnDecorationStateListener mDecorationStateListener;
     private AfterInitialLoadListener mLoadListener;
 
-    private REditorJavaScriptInterface mREditorJavaScriptInterface;
+    private TestJS mTestJS;
     /**
      * 创建一个单线程的线程池用于处理editor的exec任务，即当editor未加载成功时，将对editor的操作保存至该线程池中
      * */
@@ -110,8 +111,8 @@ public class RichEditor extends WebView {
         setVerticalScrollBarEnabled(true);
         setHorizontalScrollBarEnabled(true);
         getSettings().setJavaScriptEnabled(true);
-        mREditorJavaScriptInterface = new REditorJavaScriptInterface();
-        addJavascriptInterface(mREditorJavaScriptInterface,"TestJS");
+        mTestJS = new TestJS();
+        addJavascriptInterface(mTestJS,"TestJS");
 
 
 //        getBackground().setAlpha(2);;
@@ -501,18 +502,8 @@ public class RichEditor extends WebView {
 
     public void testJSInterface() {
         exec("javascript:RE.testFun();");
+//        loadUrl("javascript:RE.testFun()");
         Log.d("Hughie","testJSInterface");
     }
 
-    final class REditorJavaScriptInterface
-    {
-        REditorJavaScriptInterface()
-        {
-
-        }
-        public void printTest(String result)
-        {
-            Log.d("Hughie", "[REditorJavaScriptInterface] getTest result=" + result);
-        }
-    }
 }

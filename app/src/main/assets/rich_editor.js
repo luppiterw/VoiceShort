@@ -283,8 +283,9 @@ RE.removeFormat = function() {
 }
 
 RE.testFun = function(){
+    window.TestJS.printTest("111111111111111111");
     RE.setUnderline();
-    TestJS.printTest("111111111111111111");
+
 }
 // Event Listeners
 RE.editor.addEventListener("input", RE.callback);
