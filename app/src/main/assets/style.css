@@ -28,6 +28,27 @@ body {
   width: 100%;
 }
 
+#li{
+  /**background:#ecf0f5;
+  height:160px;
+  overflow:hidden;
+  width:32px;
+  border-right:0;
+  line-height:20px;
+  margin:0px;
+  padding:0px;
+  text-align:left*/
+    display: table-cell;
+
+    -webkit-user-select: auto !important;
+    -webkit-user-modify: read-write !important;
+
+    outline: 0px solid transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
 #editor {
   display: table-cell;
 

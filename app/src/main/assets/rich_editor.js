@@ -283,17 +283,38 @@ RE.removeFormat = function() {
 }
 
 RE.testFun = function(){
-    window.TestJS.printTest("111111111111111111");
-    window.TestJS.getText(RE.getText());
+//    window.TestJS.printTest("111111111111111111");
+//    window.TestJS.getText(RE.getText());
     var properties = "";
     for(var i in RE.editor)
     {
         properties += "s=[" + i + "]\n";
     }
-    window.TestJS.getSelection(properties);//(RE.editor.length);
+    var lines = RE.getText().split(/\n/g);
+//    window.TestJS.getSelection(properties);//(RE.editor.length);
+    var test = "******\n";
+    for(i = 0; i < lines.length; i++ )
+    {
+        test += i + " " + lines[i] + "\n"
+    }
+    test += "\n";
+    window.TestJS.getSelection(test);//(lines.length);
 //    RE.setUnderline();
 
 }
+
+function keyUp()
+{
+
+}
+    function keyUp(){
+    var obj=G("c2");
+    var str=obj.value;
+    str=str.replace(/\r/gi,"");
+    str=str.split("\n");
+    n=str.length;
+    line(n);
+    }
 // Event Listeners
 RE.editor.addEventListener("input", RE.callback);
 RE.editor.addEventListener("keyup", function(e) {
