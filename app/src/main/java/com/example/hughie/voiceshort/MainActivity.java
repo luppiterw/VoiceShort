@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 //import android.widget.Toolbar;
 import android.support.v7.widget.Toolbar;
@@ -127,8 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 // 按钮按下，将抽屉打开
 //                mDrawerLayout.openDrawer(Gravity.LEFT|Gravity.TOP);
 //                mDrawerLayout.openDrawer(GravityCompat.START);
-                if(mEditor != null)
-                {
+                if (mEditor != null) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         mEditor.testJSInterface();
 //                        mEditor.findAllAsync("a");
@@ -156,10 +156,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+//        Log.d("Hughie", "CUUUUUUUU=" + view.getWidth());
         Log.d("Hughie", "mEditor 0");
         mEditor = (RichEditor) findViewById(R.id.editor);
-        Log.d("Hughie","mEditor 1");
-        mEditor.setEditorHeight(200);
+        Log.d("Hughie", "mEditor 1");
+//        mEditor.setEditorHeight(200);
+        mEditor.setBackgroundColor(Color.GREEN);
         mEditor.setEditorFontSize(22);
         mEditor.setEditorFontColor(Color.RED);
         //mEditor.setEditorBackgroundColor(Color.BLUE);
@@ -169,7 +171,21 @@ public class MainActivity extends AppCompatActivity {
         mEditor.setHorizontalScrollBarEnabled(true);
 //        mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
         mEditor.setPlaceholder("Insert text here...");
-        mEditor.setBackgroundColor(Color.TRANSPARENT);
+
+        final ViewTreeObserver editorObserver = mEditor.getViewTreeObserver();
+        editorObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    mEditor.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+                mEditor.getHeight();
+                mEditor.getWidth();
+                Log.d("Hughie", "----mEditor.getHeight()=" + mEditor.getHeight());
+                mEditor.setEditorHeight(mEditor.getHeight());
+            }
+        });
+//        mEditor.setBackgroundColor(Color.TRANSPARENT);
 //        mEditor.set
 //        mEditor.getBackground().setAlpha(0);
     }

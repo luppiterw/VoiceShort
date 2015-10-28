@@ -1,3 +1,23 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<meta name="viewport" content="user-scalable=no">-->
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
+    <!--<link rel="stylesheet" type="text/css" href="normalize.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash;<a onclick="window.TestJS.printTest()">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div style="width:80px; margin:0px auto; padding:10px; text-align:center; border:2px solid #202020;">&ndash;&gt;-->
+        <!--&lt;!&ndash;Click me!!!&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;<div id="ol"><textarea id="li" disabled></textarea></div>&ndash;&gt;-->
+<!--<div id="editor" contentEditable="true" style="white-space:nowrap" onkeypress=""></div>-->
+<!--<script type="text/javascript" src="rich_editor.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,15 +25,68 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="normalize.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+
+    <style type="text/css">
+        #ol
+        {
+        position:absolute;
+        z-index:1;
+        padding:0px;
+        margin:0px;
+        border:0px;
+        background:#ecf0f5;
+        width:23px;
+        text-align:left;
+        }
+        #text_linenumber
+        {
+        background:#ecf0f5;
+        /*background:transparent;*/
+        height:160px;
+        border:0px;  /*无边框*/
+        overflow:hidden;
+        width:32px;
+        border-right-width: 0;
+        line-height:20px;
+        margin:0px;
+        padding:0px;
+        text-align:right;
+        }
+    </style>
+    <script language="JavaScript" type="text/javascript">
+        function F(objId)
+        {
+            return G(objId).value;
+        }
+        function G(objId)
+        {
+            <!--alert("objId="+objId);-->
+            return document.getElementById(objId);
+        }
+    </script>
 </head>
 <body>
 <!--<a onclick="window.TestJS.printTest()">-->
-    <!--<div style="width:80px; margin:0px auto; padding:10px; text-align:center; border:2px solid #202020;">-->
-        <!--Click me!!!-->
-    <!--</div>-->
+<!--<div style="width:80px; margin:0px auto; padding:10px; text-align:center; border:2px solid #202020;">-->
+<!--Click me!!!-->
+<!--</div>-->
 <!--</a>-->
-<div id="ol"><textarea id="li" disabled></textarea></div>
-<div id="editor" contentEditable="true" style="white-space:nowrap" onkeypress=""></div>
-<script type="text/javascript" src="rich_editor.js"></script>
+<div id="ol">
+    <textarea id="text_linenumber" disabled>
+
+    </textarea>
+</div>
+<div id="text_edit"
+     contentEditable="true"
+     style="white-space:nowrap"
+     onkeypress="editKeyPress()"
+     onscroll="G('text_linenumber').scrollTop = this.scrollTop;">
+
+</div>
+
+<script type="text/javascript" src="rich_editor.js">
+
+</script>
+
 </body>
 </html>

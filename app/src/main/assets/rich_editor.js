@@ -23,7 +23,7 @@ RE.currentSelection = {
     "endOffset": 0};
 
 
-RE.editor = document.getElementById('editor');
+RE.editor = document.getElementById('text_edit');
 
 document.addEventListener("selectionchange", function() { RE.backuprange(); });
 
@@ -73,6 +73,7 @@ RE.setWidth = function(size) {
 
 RE.setHeight = function(size) {
     document.body.style.minHeight = size;
+
 }
 
 RE.setTextAlign = function(align) {
@@ -262,6 +263,7 @@ RE.enabledEditingItems = function(e) {
     }
 
     window.location.href = "re-state://" + encodeURI(items.join(','));
+//    alert(RE.editor.clientHeight);
 }
 
 RE.focus = function() {
@@ -298,23 +300,28 @@ RE.testFun = function(){
         test += i + " " + lines[i] + "\n"
     }
     test += "\n";
-    window.TestJS.getSelection(test);//(lines.length);
+    G("text_linenumber").style.height = RE.editor.clientHeight + "px";
+//    window.TestJS.getSelection(test);//(lines.length);
+//    alert(doucment.body.style.minHeight);
+
+//    alert(RE.editor.clientHeight);
 //    RE.setUnderline();
+//    autoScroll();
 
 }
 
-function keyUp()
-{
-
-}
-    function keyUp(){
-    var obj=G("c2");
-    var str=obj.value;
-    str=str.replace(/\r/gi,"");
-    str=str.split("\n");
-    n=str.length;
-    line(n);
-    }
+//function keyUp()
+//{
+//    alert("00000");
+//}
+//    function keyUp(){
+//    var obj=G("c2");
+//    var str=obj.value;
+//    str=str.replace(/\r/gi,"");
+//    str=str.split("\n");
+//    n=str.length;
+//    line(n);
+//    }
 // Event Listeners
 RE.editor.addEventListener("input", RE.callback);
 RE.editor.addEventListener("keyup", function(e) {
@@ -324,3 +331,76 @@ RE.editor.addEventListener("keyup", function(e) {
     }
 });
 RE.editor.addEventListener("click", RE.enabledEditingItems);
+
+
+var num="";
+function editKeyPress()
+{
+    editKeyUp();
+}
+
+function clearValue(i)
+{
+    G(c[i-1]).style.color="#000";
+    keyUp();
+    if(isfirst[i]==0)
+    {
+        G(c[i-1]).value="";
+    }
+    isfirst[i]=1;
+}
+function editKeyUp()
+{
+//    alert("editKeyUp");
+    var obj=G("text_edit");
+//    alert("editKeyUp 1");
+    var str = RE.getText();
+//    var str=obj.value;
+//    alert("editKeyUp 2 = " + str);
+    str=str.replace(/\r/gi,"");
+//    alert("editKeyUp 3");
+    str=str.split("\n");
+//    alert("editKeyUp 4");
+    n=str.length;
+//    alert("editKeyUp 5");
+    line(n);
+}
+function line(n)
+{
+//    alert("line");
+    var lineobj = G("text_linenumber");
+    for (var i = 1; i <= n; i++)
+    {
+        if (document.all)
+        {
+            num += i + "\r\n";
+        }
+        else
+        {
+            num += i + "\n";
+        }
+    }
+    lineobj.value=num;
+//    alert("line="+num);
+    num="";
+}
+
+function autoScroll()
+{
+//    alert("autoScroll");
+    var nV = 0;
+    if(!document.all)
+    {
+        nV=G("text_edit").scrollTop;
+        G("text_linenumber").scrollTop=nV;
+        G("text_linenumber").setHeight(G("text_edit").height);
+//            var lineobj = G("text_linenumber");
+//            lineobj.setHeight(size);
+        setTimeout("autoScroll()",20);
+    }
+}
+if(!document.all)
+{
+//    alert("ca");
+    window.addEventListener("load",autoScroll,false);
+}

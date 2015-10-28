@@ -68,15 +68,30 @@
                 android:textSize="24sp"
                 />
 
-
-            <utils.richeditor.RichEditor
-                android:id="@+id/editor"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="left|top"
+                android:orientation="horizontal">
 
-                >
-            </utils.richeditor.RichEditor>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    >
+
+                </RelativeLayout>
+                <utils.richeditor.RichEditor
+                    android:id="@+id/editor"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:gravity="left|top"
+
+                    >
+                </utils.richeditor.RichEditor>
+
+            </LinearLayout>
+
 
 
         </LinearLayout>

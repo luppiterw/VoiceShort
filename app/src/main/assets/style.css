@@ -49,7 +49,7 @@ body {
     background-size: cover;
 }
 
-#editor {
+#text_edit {
   display: table-cell;
 
   -webkit-user-select: auto !important;
@@ -59,9 +59,17 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+    /*font-family:Arial, Helvetica, sans-serif;
+    height:160px;
+    margin:0px;
+    margin-left: 32px;
+    width:416px;
+    padding:0 0 0 35px;
+    overflow-x: hidden;
+    line-height:20px;*/
 }
 
-#editor[placeholder]:empty:not(:focus):before {
+#text_edit[placeholder]:empty:not(:focus):before {
   content: attr(placeholder);
   opacity: .2;
 }}
