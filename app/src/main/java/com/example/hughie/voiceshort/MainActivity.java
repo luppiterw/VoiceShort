@@ -263,9 +263,20 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.action_settings:
+            {
                 Log.d("Hughie", "onOptionsItemSelected---action_settings " + ++mOptionsItemSelectedCount);
                 Toast.makeText(MainActivity.this, "action_settings", Toast.LENGTH_SHORT).show();
+
+                if(mEditor != null)
+                {
+                    mEditor.setHtml("12345</br>" +
+                            "678910\r" +
+                            "ceshi" +
+                            "nihao" +
+                            "wanghui\n");
+                }
                 return true;
+            }
             case android.R.id.home:
                 if(mDrawerLayout != null)
                 {
