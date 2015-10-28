@@ -2,6 +2,7 @@ package com.example.hughie.voiceshort;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,6 +19,10 @@ import android.widget.Button;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.Timer;
 
 import utils.richeditor.RichEditor;
@@ -267,14 +272,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Hughie", "onOptionsItemSelected---action_settings " + ++mOptionsItemSelectedCount);
                 Toast.makeText(MainActivity.this, "action_settings", Toast.LENGTH_SHORT).show();
 
-                if(mEditor != null)
-                {
-                    mEditor.setHtml("12345</br>" +
-                            "678910\r" +
-                            "ceshi" +
-                            "nihao" +
-                            "wanghui\n");
-                }
+                readFile("P5");
+//                if(mEditor != null)
+//                {
+//                    mEditor.setHtml("12345</br>" +
+//                            "678910\r" +
+//                            "ceshi" +
+//                            "nihao" +
+//                            "wanghui\n");
+//                }
                 return true;
             }
             case android.R.id.home:
@@ -292,5 +298,46 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /**读取文件内容*/
+    public boolean readFile(final String fileName)
+    {
+        Log.d("Hughie","readFile["+fileName+"]");
+        try
+        {
+            String sss = Environment.getExternalStorageDirectory().getPath() +
+                    "/Giant/program/" +  fileName;
+            Log.d("Hughie","sssssss="+sss);
+            File file = new File(sss);
+            FileInputStream fis = new FileInputStream(file);
+            InputStreamReader streamReader = new InputStreamReader(fis);
+            BufferedReader bufReader = new BufferedReader(streamReader);
+            int row = 1;
+            String line;
+            String content = "";
+            while( (line = bufReader.readLine()) != null)
+            {
+//                content +=  String.format(" %03d  %s\n",row++,line);
+//                content +=  String.format("    %s\n", line);
+                content += line + "</br>";
+                Log.d("Hughie", row++ + " Line = [" + line + "]");
+            }
+
+            fis.close();
+//            Log.d("Hughie", "Read profrag.txt=[" + content + "]");
+
+            if(mEditor!=null)
+            {
+                mEditor.setHtml(content);
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return true;
     }
 }
