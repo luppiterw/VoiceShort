@@ -80,6 +80,7 @@
                     >
 
                 </RelativeLayout>
+
                 <utils.richeditor.RichEditor
                     android:id="@+id/editor"
                     android:layout_width="0dp"

@@ -59,6 +59,7 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  white-space:nowrap
     /*font-family:Arial, Helvetica, sans-serif;
     height:160px;
     margin:0px;
