@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Useless now-->
+    <declare-styleable name="RichEditor">
+        <attr name="editorGravity" >
+            <flag name = "left" value="100" />
+            <flag name = "right" value="200" />
+            <flag name = "top" value="11" />
+            <flag name = "center" value="99" />
+        </attr>
+    </declare-styleable>
+</resources>

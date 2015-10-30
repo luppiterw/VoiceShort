@@ -219,6 +219,18 @@ public class RichEditor extends WebView {
     }
 
     private void applyAttributes(Context context, AttributeSet attrs) {
+
+        /**test self-defined attrs*/
+//        final int[] selfAttrsArray = R.styleable.RichEditor;
+//        TypedArray test = context.obtainStyledAttributes(attrs,selfAttrsArray);
+//        int edtorGravity = test.getInt(0,NO_ID);
+//        Log.d("Hughie","edtorGravity=" +edtorGravity);
+
+        /**Use system gravity to set alignment.
+         * Self-defined attrs maybe used here when necessary
+         * TODO
+         * */
+
         final int[] attrsArray = new int[] {
                 android.R.attr.gravity
         };
