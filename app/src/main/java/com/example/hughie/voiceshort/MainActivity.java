@@ -177,19 +177,19 @@ public class MainActivity extends AppCompatActivity {
 //        mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
         mEditor.setPlaceholder("Insert text here...");
 
-//        final ViewTreeObserver editorObserver = mEditor.getViewTreeObserver();
-//        editorObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//                    mEditor.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                }
-//                mEditor.getHeight();
-//                mEditor.getWidth();
-//                Log.d("Hughie", "----mEditor.getHeight()=" + mEditor.getHeight());
-//                mEditor.setEditorHeight(mEditor.getHeight());
-//            }
-//        });
+        final ViewTreeObserver editorObserver = mEditor.getViewTreeObserver();
+        editorObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    mEditor.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+                mEditor.getHeight();
+                mEditor.getWidth();
+                Log.d("Hughie", "----mEditor.getHeight()=" + mEditor.getHeight());
+                mEditor.setEditorHeight(mEditor.getHeight());
+            }
+        });
 //        mEditor.setBackgroundColor(Color.TRANSPARENT);
 //        mEditor.set
 //        mEditor.getBackground().setAlpha(0);
