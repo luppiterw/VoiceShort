@@ -1,6 +1,7 @@
 package com.example.hughie.voiceshort;
 
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.view.GravityCompat;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private RichEditor mEditor = null;
+
+    private MediaPlayer mMediaplayer = null;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -190,6 +193,9 @@ public class MainActivity extends AppCompatActivity {
                 mEditor.setEditorHeight(mEditor.getHeight());
             }
         });
+
+        mMediaplayer = new MediaPlayer();
+
 //        mEditor.setBackgroundColor(Color.TRANSPARENT);
 //        mEditor.set
 //        mEditor.getBackground().setAlpha(0);
