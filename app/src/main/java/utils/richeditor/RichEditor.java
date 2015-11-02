@@ -85,7 +85,9 @@ public class RichEditor extends WebView {
     private static final String STATE_SCHEME = "re-state://";
     ///< js editor加载完成的标识，未加载完成时，对editor的一系列操作无法进行，处于等待状态
     private boolean isReady = false;
-    private String mContents;
+    private String mHtmlContents;
+    private ArrayList<String> mHtmlContentsArray = new ArrayList<String>();
+
     private OnTextChangeListener mTextChangeListener;
     private OnDecorationStateListener mDecorationStateListener;
     private AfterInitialLoadListener mLoadListener;
@@ -194,17 +196,18 @@ public class RichEditor extends WebView {
 
     private void callback(String text) {
         Log.d("Hughie","callback text=" + text);
-        mContents = text.replaceFirst(CALLBACK_SCHEME, "");
+        assignContent(text.replaceFirst(CALLBACK_SCHEME, ""));
+//        mHtmlContents = text.replaceFirst(CALLBACK_SCHEME, "");
         if (mTextChangeListener != null) {
 //            Log.d("Hughie","callback mTextChangeListener=" + mTextChangeListener);
-            mTextChangeListener.onTextChange(mContents);
+            mTextChangeListener.onTextChange(mHtmlContents);
         }
     }
 
     private void stateCheck(String text) {
 
         String state = text.replaceFirst(STATE_SCHEME, "").toUpperCase(Locale.ENGLISH);
-        Log.d("Hughie","stateCheck text=" + text + " state=" + state);
+        Log.d("Hughie", "stateCheck text=" + text + " state=" + state);
         List<Type> types = new ArrayList<>();
         for (Type type : Type.values()) {
 //            Log.d("Hughie","    stateCheck for state=" + state + " type.name=" + type.name());
@@ -281,22 +284,99 @@ public class RichEditor extends WebView {
         ta.recycle();
     }
 
-    public void setHtml(String contents) {
-        Log.d("Hughie","setHtml contents=" + contents);
-        if (contents == null) {
-            contents = "";
-        }
-        try {
-            exec("javascript:RE.setHtml('" + URLEncoder.encode(contents, "UTF-8") + "');");
-        } catch (UnsupportedEncodingException e) {
-            // No handling
-        }
-        mContents = contents;
+    /**
+     * Common interface for setting current text contents, changing some symbols to html format.
+     * Only handle '\n' here. Maybe some other characters need to be explained later.
+     * @param text Input String, normal text format.
+     * */
+    public void setText(String text)
+    {
+        setHtml(text.replaceAll("\n","\\<br>"));
+    }
+    /**
+     * Common interface for getting current text contents, changing some html symbols to text format.
+     * Only handle '<br>' here. Maybe some other characters need to be explained later.
+     * @return Format text string
+     * */
+    public String getText()
+    {
+        return mHtmlContents.replaceAll("\\<br>", "\n");
+    }
+    /**
+     * Get content line count.
+     * @return Line count.
+     * */
+    public int getLineCount()
+    {
+        return mHtmlContentsArray.size();
     }
 
-    public String getHtml() {
-        return mContents;
+    /**
+     * Forbidden to use this function to modify html contents directly.
+     * @param contents Html format contents.
+     * */
+    private void setHtml(String contents)
+    {
+        Log.d("Hughie", "setHtml contents=" + contents);
+        if (contents == null)
+        {
+            contents = "";
+        }
+        try
+        {
+            exec("javascript:RE.setHtml('" + URLEncoder.encode(contents, "UTF-8") + "');");
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+            ///todo do something
+        }
+        assignContent(contents);
     }
+    /**
+     * Assign mHtmlContents and do something necessary when assigning.
+     * @param contents New mHtmlContents.
+     * */
+    private void assignContent(String contents)
+    {
+        if(mHtmlContents == contents)
+            return;
+        mHtmlContents = contents;
+        mHtmlContentsArray.clear();
+        String[] array = contents.split("\\<br>",-1);
+        for(int i = 0; i < array.length; i++)
+        {
+            ///< except for last <br>
+            if(i < 1 || i != array.length - 1)
+                mHtmlContentsArray.add(array[i]);
+        }
+
+    }
+    /**
+     * Clear editor data.
+     *
+     * */
+    public void clearEditorData()
+    {
+        setHtml("");
+    }
+
+//    public void setHtml(String contents) {
+//        Log.d("Hughie","setHtml contents=" + contents);
+//        if (contents == null) {
+//            contents = "";
+//        }
+//        try {
+//            exec("javascript:RE.setHtml('" + URLEncoder.encode(contents, "UTF-8") + "');");
+//        } catch (UnsupportedEncodingException e) {
+//            // No handling
+//        }
+//        mHtmlContents = contents;
+//    }
+//
+//    public String getHtml() {
+//        return mHtmlContents;
+//    }
 
     public void setEditorFontColor(int color) {
         String hex = convertHexColorString(color);

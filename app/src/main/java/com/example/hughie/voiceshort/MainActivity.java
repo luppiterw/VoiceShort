@@ -327,7 +327,8 @@ public class MainActivity extends AppCompatActivity {
             {
 //                content +=  String.format(" %03d  %s\n",row++,line);
 //                content +=  String.format("    %s\n", line);
-                content += line + "</br>";
+//                content += line + "</br>";
+                content += line + "\n";
                 Log.d("Hughie", row++ + " Line = [" + line + "]");
             }
 
@@ -336,7 +337,8 @@ public class MainActivity extends AppCompatActivity {
 
             if(mEditor!=null)
             {
-                mEditor.setHtml(content);
+                mEditor.setText(content);
+//                mEditor.setHtml(content);
             }
 
         }
