@@ -2,6 +2,7 @@ package com.example.hughie.voiceshort;
 
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Timer;
 
@@ -44,7 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
     private RichEditor mEditor = null;
 
-    private MediaPlayer mMediaplayer = null;
+    private MediaPlayer mPlayer = null;
+    private MediaRecorder mRecorder = null;
+    private Button mStartRecBtn = null;
+    private Button mStopRecBtn = null;
+    private Button mPlayRecBtn = null;
+    private Button mStopPlayRecBtn = null;
+    private String mRecFileName;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -139,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
                 if (mEditor != null) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         mEditor.testJSInterface();
+
+
 //                        mEditor.findAllAsync("a");
 //                        if(mEditor.pageDown(true) == false)
 //                        {
@@ -164,6 +174,75 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        mRecFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
+        mRecFileName += "/voiceshort1.3gp";
+        ///< 开始录音
+        mStartRecBtn = (Button)findViewById(R.id.btn_startVoice);
+        mStartRecBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mRecorder == null)
+                {
+                    mRecorder = new MediaRecorder();
+                }
+
+
+                mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                mRecorder.setOutputFile(mRecFileName);
+                mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                try {
+                    mRecorder.prepare();
+                } catch (IOException e) {
+                    Log.e("Hughie", "prepare() failed");
+                }
+                mRecorder.start();
+            }
+        });
+        ///<停止录音
+        mStopRecBtn = (Button)findViewById(R.id.btn_stopVoice);
+        mStopRecBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mRecorder != null)
+                {
+                    mRecorder.stop();
+                    mRecorder.release();
+                    mRecorder = null;
+                }
+            }
+        });
+        ///< 开始播放
+        mPlayRecBtn = (Button)findViewById(R.id.btn_playVoice);
+        mPlayRecBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mPlayer == null)
+                    mPlayer = new MediaPlayer();
+                try{
+                    mPlayer.setDataSource(mRecFileName);
+                    mPlayer.prepare();
+                    mPlayer.start();
+                }catch(IOException e){
+                    Log.e("Hughie","播放失败");
+                }
+            }
+        });
+        ///< 停止播放
+        mStopRecBtn = (Button)findViewById(R.id.btn_stopPlayVoice);
+        mStopRecBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mPlayer != null)
+                {
+                    mPlayer.release();
+                    mPlayer = null;
+                }
+            }
+        });
+
 //        Log.d("Hughie", "CUUUUUUUU=" + view.getWidth());
         Log.d("Hughie", "mEditor 0");
         mEditor = (RichEditor) findViewById(R.id.editor);
@@ -194,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mMediaplayer = new MediaPlayer();
+//        mPlayer = new MediaPlayer();
 
 //        mEditor.setBackgroundColor(Color.TRANSPARENT);
 //        mEditor.set
