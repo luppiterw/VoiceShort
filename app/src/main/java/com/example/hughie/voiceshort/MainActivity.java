@@ -5,6 +5,8 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -53,6 +55,79 @@ public class MainActivity extends AppCompatActivity {
     private Button mPlayRecBtn = null;
     private Button mStopPlayRecBtn = null;
     private String mRecFileName;
+
+
+    private volatile Thread blinker;
+    public void stop()
+    {
+        blinker = null;
+    }
+
+    private Thread mThread= new Thread(new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            Thread thisThread = Thread.currentThread();
+//            while(blinker == thisThread)
+            while(true)
+            {
+                try
+                {
+                    thisThread.sleep(1000);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+                if(mBBB)
+                {
+                    try
+                    {
+                        Log.d("Hughie","testing  1");
+                        while(mCount < 10)
+                        {
+                            mCount ++;
+
+                            Message msg = mToastHandler.obtainMessage();
+                            msg.what = mCount;
+                            mToastHandler.sendMessage(msg);
+                            Log.d("Hughie",mCount + "...");
+                            Thread.currentThread().sleep(1000);
+
+                        }
+                        Log.d("Hughie","testing  2");
+
+                        if(mCount >= 10)
+                        {
+                            mBBB = false;
+                            mCount = 0;
+//                            stop();
+                        }
+                        Log.d("Hughie", "testing  3");
+                    }
+                    catch(InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }
+    });
+    private boolean mBBB = false;
+    private int mCount = 0;
+    private class ToastHandler extends Handler
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            Log.d("Hughie", "handleMessage" + msg.what + "...");
+//            mTextViewFileTitle.setText(String.valueOf(msg.what));
+//            Toast.makeText(getActivity(),msg.what + "...",Toast.LENGTH_SHORT).show();
+        }
+    }
+    private ToastHandler mToastHandler = new ToastHandler();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -136,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
         //        setSupportActionBar(toolbar_main);
 
 
+//        mThread.start();
         Button button = (Button) findViewById(R.id.btn);
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -148,6 +224,16 @@ public class MainActivity extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         mEditor.testJSInterface();
 
+//                        if(!mBBB)
+//                        {
+//                            mBBB = true;
+//                        }
+//            if(blinker != mThread)
+//            {
+//                blinker = mThread;
+//                blinker.start();
+////                mThread.start();
+//            }
 
 //                        mEditor.findAllAsync("a");
 //                        if(mEditor.pageDown(true) == false)
