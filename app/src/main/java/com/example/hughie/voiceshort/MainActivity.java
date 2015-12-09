@@ -31,6 +31,7 @@ import java.io.InputStreamReader;
 import java.util.Timer;
 
 import utils.richeditor.RichEditor;
+import utils.wizard.VsFullScreenScrollAssist;
 
 public class MainActivity extends AppCompatActivity {
 //public class MainActivity extends Activity {
@@ -149,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("Hughie", "MainActivity onCreate before setContentView.");
         setContentView(view);
+//        VsFullScreenScrollAssist.assistActivity(this);
         Log.d("Hughie", "MainActivity onCreate after setContentView.");
 //        setContentView(R.layout.activity_main);
 
