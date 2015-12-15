@@ -112,6 +112,11 @@ public class RichEditor extends WebView {
 
         setVerticalScrollBarEnabled(true);
         setHorizontalScrollBarEnabled(true);
+
+        ///< 用于android stuidio中预览
+        if(isInEditMode())
+            return;
+
         getSettings().setJavaScriptEnabled(true);
         mTestJS = new TestJS();
         addJavascriptInterface(this,"TestJS");
