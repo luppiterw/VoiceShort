@@ -28,6 +28,11 @@ android {
             signingConfig signingConfigs.voiceshort
         }
     }
+
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir 'src/main/libs'
+    }
 }
 
 dependencies {
