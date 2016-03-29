@@ -17,6 +17,10 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        ndk{
+            moduleName "java"
+            ldLibs "log"
+        }
     }
     buildTypes {
         release {
@@ -29,10 +33,10 @@ android {
         }
     }
 
-    sourceSets.main {
-        jni.srcDirs = []
-        jniLibs.srcDir 'src/main/libs'
-    }
+//    sourceSets.main {
+//        jni.srcDirs = []
+//        jniLibs.srcDir 'src/main/libs'
+//    }
 }
 
 dependencies {
