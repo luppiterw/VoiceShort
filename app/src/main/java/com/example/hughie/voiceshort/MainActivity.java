@@ -30,9 +30,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Timer;
 
-import testjnis.TestNative;
+import VoiceShortJNI.VoiceShortNative;
 import utils.richeditor.RichEditor;
-import utils.wizard.VsFullScreenScrollAssist;
 
 public class MainActivity extends AppCompatActivity {
 //public class MainActivity extends Activity {
@@ -368,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
 //        mEditor.set
 //        mEditor.getBackground().setAlpha(0);
 
-        TestNative.firstfunction();
+        VoiceShortNative.voiceshort_firstfunction();
     }
 
     @Override
