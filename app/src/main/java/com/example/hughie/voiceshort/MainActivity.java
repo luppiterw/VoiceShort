@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Timer;
 
+import testjnis.TestNative;
 import utils.richeditor.RichEditor;
 import utils.wizard.VsFullScreenScrollAssist;
 
@@ -366,6 +367,8 @@ public class MainActivity extends AppCompatActivity {
 //        mEditor.setBackgroundColor(Color.TRANSPARENT);
 //        mEditor.set
 //        mEditor.getBackground().setAlpha(0);
+
+        TestNative.firstfunction();
     }
 
     @Override
@@ -404,6 +407,7 @@ public class MainActivity extends AppCompatActivity {
             mTimerTask.cancel();
             mTimerTask = null;
         }
+
 
         super.onPause();
     }
